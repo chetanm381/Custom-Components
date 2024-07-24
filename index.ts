@@ -1,9 +1,8 @@
-import { off } from "process";
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import { HelloWorld, IHelloWorldProps } from "./HelloWorld";
 import * as React from "react";
 
-export class CmpSpreadSheet implements ComponentFramework.ReactControl<IInputs, IOutputs> {
+export class SpreadSheet implements ComponentFramework.ReactControl<IInputs, IOutputs> {
     private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
     private notifyOutputChanged: () => void;
     private data: string;
@@ -13,6 +12,7 @@ export class CmpSpreadSheet implements ComponentFramework.ReactControl<IInputs, 
     private year:string;
     private SubAccountsID:string[]=[]
     private FiscelYear:boolean;
+
     /**
      * Empty constructor.
      */
@@ -30,7 +30,7 @@ export class CmpSpreadSheet implements ComponentFramework.ReactControl<IInputs, 
         notifyOutputChanged: () => void,
         state: ComponentFramework.Dictionary
     ): void {
-        
+       
         this.notifyOutputChanged = notifyOutputChanged;
         if(context.parameters.jsonDataIn.raw){
         this.data = context.parameters.jsonDataIn.raw;}
@@ -65,8 +65,8 @@ export class CmpSpreadSheet implements ComponentFramework.ReactControl<IInputs, 
           console.log(this.initialData,"    asfjnasd")
           console.log(this.SubAccountsID)
 console.log("till now")
-
     }
+
     /**
      * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
      * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
@@ -117,9 +117,7 @@ console.log("till now")
      * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
      */
     public getOutputs(): IOutputs {
-        return {
-            jsonDataOut:this.data
-        };
+        return { jsonDataOut:this.data };
     }
 
     /**
@@ -135,5 +133,4 @@ console.log("till now")
         console.log(this.data,"This Update is Running")
         
     }
-
 }

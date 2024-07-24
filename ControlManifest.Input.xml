@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="PCF" constructor="CmpSpreadSheet" version="1.2.0" display-name-key="CmpSpreadSheet_v20_Dev" description-key="CmpSpreadSheet description" control-type="virtual" >
+  <control namespace="Dev" constructor="SpreadSheet" version="0.0.1" display-name-key="SpreadSheet" description-key="SpreadSheet description" control-type="virtual" >
     <!--external-service-usage node declares whether this 3rd party PCF control is using external service or not, if yes, this control will be considered as premium and please also add the external domain it is using.
     If it is not using any external service, please set the enabled="false" and DO NOT add any domain below. The "enabled" will be false by default.
     Example1:
@@ -18,6 +18,7 @@
       -->
     </external-service-usage>
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
+    
     <property name="jsonDataIn" display-name-key="jsonDataIn" description-key="Json Data to autopopulate data in PCF" of-type="SingleLine.Text" usage="input" required="true" />
     <property name="SaveData" display-name-key="SaveData" description-key="SaveData , Change boolean value so Data from PCF Converted As Json" of-type="TwoOptions" usage="bound" required="true" />
    <property name="CopyData" display-name-key="CopyData" description-key="CopyData , Change boolean value so Data from PCF Copied to Clipboard" of-type="TwoOptions" usage="bound" required="true" />
@@ -40,8 +41,8 @@
       <platform-library name="React" version="16.8.6" />
       <platform-library name="Fluent" version="8.29.0" />
       <!-- UNCOMMENT TO ADD MORE RESOURCES
-      <css path="css/CmpSpreadSheet.css" order="1" />
-      <resx path="strings/CmpSpreadSheet.1033.resx" version="1.0.0" />
+      <css path="css/SpreadSheet.css" order="1" />
+      <resx path="strings/SpreadSheet.1033.resx" version="1.0.0" />
       -->
     </resources>
     <!-- UNCOMMENT TO ENABLE THE SPECIFIED API

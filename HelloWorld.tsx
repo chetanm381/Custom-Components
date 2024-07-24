@@ -29,38 +29,38 @@ export const HelloWorld: React.FC<IHelloWorldProps> = ({
     ? ["Number", "Name", "Description", "10/" + Year, "11/" + Year, "12/" + Year, "01/" + NextYear, "02/" + NextYear, "03/" + NextYear, "04/" + NextYear, "05/" + NextYear, "06/" + NextYear, "07/" + NextYear, "08/" + NextYear, "09/" + NextYear]
     : ["Number", "Name", "Description", "01/" + Year, "02/" + Year, "03/" + Year, "04/" + Year, "05/" + Year, "06/" + Year, "07/" + Year, "08/" + Year, "09/" + Year, "10/" + Year, "11/" + Year, "12/" + Year];
 
-  // eslint-disable-next-line
-  const handleChange = React.useCallback(
-    (newData: any) => {
+
+//eslint-disable-next-line
+  const handleChange = React.useCallback((newData: any) => {
       let isValid = true;
       for (let i = 0; i < newData.length; i++) {
 
 
-          if (newData[i][2].value === "*Main Account*") {
-            // If pasting, allow the row but make it non-editable
-            if (data[i] && data[i][2].value === "*Main Account*") {
-              // Allow pasting but prevent further edits
-              newData[i] = data[i];
-            } else {
-              // Prevent empty rows from being pasted
-              const isEmptyRow = newData[i].every((cell: { value: string; }) => cell.value === '');
-              if (isEmptyRow) {
-                newData[i] = data[i]; // Restore the old data if the row is empty
-                continue; // Skip to the next row
-              }
+        if (newData[i][2].value === "*Main Account*") {
+          // If pasting, allow the row but make it non-editable
+          if (data[i] && data[i][2].value === "*Main Account*") {
+            // Allow pasting but prevent further edits
+            newData[i] = data[i];
+          } else {
+            // Prevent empty rows from being pasted
+            const isEmptyRow = newData[i].every((cell: { value: string; }) => cell.value === '');
+            if (isEmptyRow) {
+              newData[i] = data[i]; // Restore the old data if the row is empty
+              continue; // Skip to the next row
             }
           }
-  
+        }
+
 
         for (let j = 3; j < newData[i].length; j++) {
           const cell = newData[i][j] || { value: '0' };
           const value = cell.value || "0";
 
-          if (/^[a-zA-Z]/.test(value)) {
+          if (!/^[0-9.]*$/.test(value)) {
             newData[i][j] = { value: '' }; // Clear the cell if it starts with an alphabet
             isValid = false;
-          } else if (/[a-zA-Z]/.test(value)) {
-            const index = value.search(/[a-zA-Z]/);
+          } else if (!/[0-9.]*/.test(value)) {
+            const index = value.search(!/[0-9.]*/);
             const numericPart = value.slice(0, index); // Extract the numeric part
             newData[i][j] = { value: numericPart }; // Keep the numeric part
             isValid = false;
@@ -78,7 +78,7 @@ export const HelloWorld: React.FC<IHelloWorldProps> = ({
   React.useEffect(() => {
     const sanitizedData = data.map(row => row.map(cell => (cell ? { value: cell.value || '' } : { value: '' })));
     const Fixed = FiscelYear ? ["Number", "Name", "Description", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "_ID"]
-                             : ["Number", "Name", "Description", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "_ID"];
+      : ["Number", "Name", "Description", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "_ID"];
     const jsonData = sanitizedData.map((row, rowIndex) => {
       const rowObject: { [key: string]: string } = {};
       row.forEach((cell, index) => {
@@ -94,12 +94,12 @@ export const HelloWorld: React.FC<IHelloWorldProps> = ({
   }, [OnSave]);
 
   // Handle copy to clipboard
-React.useEffect(()=>{
+  React.useEffect(() => {
     const sanitizedData = data.map(row => row.map(cell => cell.value).join('\t')).join('\n');
     navigator.clipboard.writeText(sanitizedData)
       .then(() => console.log('Data copied to clipboard'))
       .catch(err => console.error('Error copying data: ', err));
-  },[onCopy]);
+  }, [onCopy]);
 
   // Handle add row
   const handleAddRow = () => {
@@ -128,7 +128,7 @@ React.useEffect(()=>{
           onChange={handleChange}
         />
       </div>
-      Version 1.2.0
+      Version 1.2.1
     </div>
   );
 };
